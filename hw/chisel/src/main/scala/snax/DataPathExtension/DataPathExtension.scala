@@ -5,6 +5,7 @@ import chisel3.util._
 
 import snax.utils._
 import snax.xdma.DesignParams._
+import java.io.File
 
 /** The parent (abstract) Class for the DMA Extension Generation Params This
   * class template is used to isolate the definition of class (when user provide
@@ -186,6 +187,23 @@ class SystemVerilogDataPathExtension(topmodule: String, filelist: Seq[String])(
     implicit extensionParam: DataPathExtensionParam
 ) extends DataPathExtension {
 
+  def this(topmodule: String, dir: String)(implicit
+      extensionParam: DataPathExtensionParam
+  ) = this(
+    topmodule, {
+      val folder = new File(dir)
+      val filelist = if (folder.exists && folder.isDirectory) {
+        folder.listFiles.filter(_.isFile).toList
+      } else {
+        List.empty[File]
+      }
+      filelist
+        .filter(i => i.getName.endsWith(".sv") || i.getName.endsWith(".v"))
+        .map(_.toPath.toString)
+        .toSeq
+    }
+  )
+
   val sv_module = Module(
     new BlackBox(
       Map(
@@ -205,7 +223,8 @@ class SystemVerilogDataPathExtension(topmodule: String, filelist: Seq[String])(
       override def desiredName: String = topmodule
       var InLineSV = ""
       for (file <- filelist) {
-        InLineSV += scala.io.Source.fromFile(file).getLines().mkString("\n")
+        InLineSV += scala.io.Source.fromFile(file).getLines().mkString("\r\n")
+        InLineSV +="\r\n"
       }
       setInline(extensionParam.moduleName + ".sv", InLineSV)
     }

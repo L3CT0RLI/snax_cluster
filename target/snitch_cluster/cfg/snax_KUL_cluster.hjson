@@ -157,7 +157,8 @@
             writer_agu_temporal_dimension: 6, 
             HasTransposer: 3, 
             HasVerilogMemset: 1, 
-            HasMaxPool: 2
+            HasMaxPool: 2,
+            HasFPU: 4
         }
         // Xdiv_sqrt: true,
         # isa: "rv32ema",
