@@ -163,7 +163,7 @@ module float_adder_2nd #(
         assign Mant_normed_2st = round_en ? Mant_rounded [MANT_WIDTH-1+1+1:1] : Mant_rounded [MANT_WIDTH-1+1:0];
         assign final_sign =Oprand_A_bigger_than_B_reg1 ? Oprand_A_reg1[DATA_WIDTH-1] : Oprand_B_reg1[DATA_WIDTH-1];
         assign up_overflow_flag = (Expo_rounded >=255); 
-        assign down_overflow_flag = (!Expo_to_be_normed_1st[EXPO_WIDTH-1])&(Expo_rounded[EXPO_WIDTH])&(!shift_right);
+        assign down_overflow_flag = (!Expo_to_be_normed_1st[EXPO_WIDTH-1])&(Expo_rounded[EXPO_WIDTH])&(!shift_right)|(Mant_normed_2st=='d0);
         assign Result_normal = {final_sign,Expo_rounded[EXPO_WIDTH-1:0],Mant_normed_2st[MANT_WIDTH-1:0]};
         assign Result_d = up_overflow_flag ? {final_sign,8'd255,23'd0}:(down_overflow_flag ?{final_sign,8'd0,23'd0}:(much_larger_reg1 ? Larger_oprand :Result_normal));
 

@@ -27,14 +27,14 @@ module mul_log2e #(
  wire en_stage0,en_stage1;
  wire vld_reg0;
  wire shift;
- assign en_stage0 = en & vld_in;
- assign en_stage1 = en & vld_reg0;
+ assign en_stage0 = en;// & vld_in;
+ assign en_stage1 = en;// & vld_reg0;
  wire   [DATA_WIDTH-1:0]  Oprand_A;
  wire   [DATA_WIDTH-1:0]  Result;
- dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg0 (Oprand_A_D, clk, en_stage0, rst_n, Oprand_A);
- dff_en #(.WIDTH(1)) dff_vld0 (vld_in,clk,en_stage0,rst_n,vld_reg0);
- dff_en #(.WIDTH(DATA_WIDTH))  dff_Result (Result, clk, en_stage1, rst_n, Result_out);
- dff_en #(.WIDTH(1)) dff_vld_out (vld_reg0,clk,en_stage1,rst_n,vld_out);
+ dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg0 (Oprand_A_D, clk, en, rst_n, Oprand_A);
+ dff_en #(.WIDTH(1)) dff_vld0 (vld_in,clk,en,rst_n,vld_reg0);
+ dff_en #(.WIDTH(DATA_WIDTH))  dff_Result (Result, clk, en, rst_n, Result_out);
+ dff_en #(.WIDTH(1)) dff_vld_out (vld_reg0,clk,en,rst_n,vld_out);
  ///////////////////////////////////////////////////////
  assign sign_A = Oprand_A[DATA_WIDTH-1];
  assign Expo_A = Oprand_A[DATA_WIDTH-2:MANT_WIDTH];

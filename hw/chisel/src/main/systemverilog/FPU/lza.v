@@ -289,3 +289,4 @@ assign C_317 = g[30] | (p[30]&C_316);
     assign C_out_30 = g[31] | (p[31] & C_307);
     assign C_out_31 = g[31] | (p[31] & C_317);
 endmodule
+

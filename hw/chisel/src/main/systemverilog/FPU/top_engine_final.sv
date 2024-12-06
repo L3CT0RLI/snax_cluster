@@ -251,7 +251,7 @@ fp_32_oprand_tree #(
     .EXPO_WIDTH ( 8 ),
     .MANT_WIDTH ( 23 ),
     .WIDTH      ( FP_WIDTH      ),
-    .OP_NUM     ( NUM_SOFTMAX_MAX/PE_NUM     ))
+    .OP_NUM     ( 32     ))
  u_fp_32_oprand_tree (
     .oprands_in              ( sum_tree_input[FP_WIDTH*NUM_SOFTMAX_MAX/PE_NUM-1:0] ),
     .valid                   ( sum_tree_vld_in                    ),

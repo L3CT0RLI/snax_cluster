@@ -18,12 +18,12 @@ module _2_power_X #(
 
 wire en_stage_0,en_stage_1,en_stage_2,en_stage_3,en_stage_4,en_stage_5;
 wire vld_in_reg0,vld_in_reg1,vld_in_reg2,vld_in_reg3,vld_in_reg4;
-assign en_stage_0 = en & vld_in;
-assign en_stage_1 = en & vld_in_reg0;
-assign en_stage_2 = en & vld_in_reg1;
-assign en_stage_3 = en & vld_in_reg2;
-assign en_stage_4 = en & vld_in_reg3;
-assign en_stage_5 = en & vld_in_reg4;
+assign en_stage_0 = en;// & vld_in;     
+assign en_stage_1 = en;// & vld_in_reg0;
+assign en_stage_2 = en;// & vld_in_reg1;
+assign en_stage_3 = en;// & vld_in_reg2;
+assign en_stage_4 = en;// & vld_in_reg3;
+assign en_stage_5 = en;// & vld_in_reg4;
 
 wire [0:0]                                   sign_A;
 wire [EXPO_WIDTH-1:0]                        expo_A;

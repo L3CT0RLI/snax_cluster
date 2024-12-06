@@ -51,11 +51,11 @@ wire shift_right;
 /////////////////////////////////////
 wire en_stage_0,en_stage_1,en_stage_2,en_stage_3,en_stage_4;
 wire vld_in_reg0,vld_in_reg1,vld_in_reg2,vld_in_reg3,vld_in_reg4;
-assign en_stage_0 = en & vld_in;
-assign en_stage_1 = en & vld_in_reg0;
-assign en_stage_2 = en & vld_in_reg1;
-assign en_stage_3 = en & vld_in_reg2;
-assign en_stage_4 = en & vld_in_reg3;
+assign en_stage_0 = en;// & vld_in;
+assign en_stage_1 = en;// & vld_in_reg0;
+assign en_stage_2 = en;// & vld_in_reg1;
+assign en_stage_3 = en;// & vld_in_reg2;
+assign en_stage_4 = en;// & vld_in_reg3;
 ///////////pipelines//////////////////////////////////////////////
 wire     [DATA_WIDTH-1:0]          Oprand_A_reg0;
 dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg0 (Oprand_A, clk, en_stage_0, rst_n, Oprand_A_reg0);
