@@ -13,7 +13,7 @@ object HasFPU extends HasDataPathExtension {
   def instantiate(clusterName: String): SystemVerilogDataPathExtension = Module(
     new SystemVerilogDataPathExtension(
       topmodule = "FPU",
-      dir = "src/main/systemverilog/FPU"
+      dir = "src/main/systemverilog/FPU_new"
     ) {
       override def desiredName = clusterName + namePostfix
     }
