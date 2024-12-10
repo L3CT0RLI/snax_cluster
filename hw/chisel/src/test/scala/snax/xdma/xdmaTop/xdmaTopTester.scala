@@ -19,8 +19,7 @@ import snax.xdma.xdmaFrontend._
 import snax.csr_manager.SnaxCsrIO
 import java.util.HashMap
 import snax.xdma.DesignParams._
-import snax.DataPathExtension.{HasMaxPool, HasTransposer, HasVerilogMemset}
-import snax.DataPathExtension.HasFPU
+import snax.DataPathExtension.{HasMaxPool, HasTransposer, HasVerilogMemset, HasSFU}
 
 class AGUParamTest(
     val address: Long,
@@ -1130,7 +1129,7 @@ object xdmaTopEmitter extends App {
       writerParam = new DMADataPathParam(
         new AXIParam,
         new ReaderWriterParam,
-        Seq(HasMaxPool, HasVerilogMemset, HasTransposer, HasFPU)
+        Seq(HasMaxPool, HasVerilogMemset, HasTransposer, HasSFU)
       )
     ),
     args = Array("--target-dir", "generated/xdma")
