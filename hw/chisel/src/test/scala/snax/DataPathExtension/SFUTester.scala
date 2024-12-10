@@ -24,7 +24,7 @@ object BigIntReader {
   }
 }
 
-class FPUSigmoidTester extends DataPathExtensionTester {
+class SFUSigmoidTester extends DataPathExtensionTester {
 
   def hasExtension = HasSFU
 
