@@ -19,9 +19,9 @@ module dual_port_ram_pos #(
     reg [DATA_WIDTH-1:0] ram [0:RAM_DEPTH-1];
 
     // Initialize RAM from file
-    initial begin
+    /*initial begin
         $readmemh("F:/learning/verilog/masterthesis/Master-Thesis/arith_modules/memory_init_exp_pos.mem", ram);
-    end
+    end*/
 
     always @(posedge clk) begin
         if(!rst_n)begin

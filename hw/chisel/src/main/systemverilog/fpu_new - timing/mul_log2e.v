@@ -24,22 +24,6 @@ module mul_log2e #(
  wire                          Inf_flag;
  wire                           flag;
  //////////////////////////////////////////////////////
- wire en_stage0,en_stage1;
- wire vld_reg0;
- wire shift;
- assign en_stage0 = en;// & vld_in;
- assign en_stage1 = en;// & vld_reg0;
- wire   [DATA_WIDTH-1:0]  Oprand_A;
- wire   [DATA_WIDTH-1:0]  Result;
- dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg0 (Oprand_A_D, clk, en, rst_n, Oprand_A);
- dff_en #(.WIDTH(1)) dff_vld0 (vld_in,clk,en,rst_n,vld_reg0);
- dff_en #(.WIDTH(DATA_WIDTH))  dff_Result (Result, clk, en, rst_n, Result_out);
- dff_en #(.WIDTH(1)) dff_vld_out (vld_reg0,clk,en,rst_n,vld_out);
- ///////////////////////////////////////////////////////
- assign sign_A = Oprand_A[DATA_WIDTH-1];
- assign Expo_A = Oprand_A[DATA_WIDTH-2:MANT_WIDTH];
- assign Mant_A = Oprand_A[MANT_WIDTH-1:0];
- assign Ext_Mant_A = {1'b1,Mant_A[MANT_WIDTH-1:0]};
  wire [2:0]  temp0;
  wire [4:0]  temp1;
  wire [5:0]  temp2;
@@ -48,10 +32,37 @@ module mul_log2e #(
  wire [12:0] temp5;
  wire [14:0] temp6;
  wire [16:0] temp7;
+ wire [16:0] temp7_Q;
  wire [20:0] temp8;
  wire [21:0] temp9;
  wire [22:0] temp10;
  wire [24:0] temp11;
+ /////////////////////////////////////////////
+ wire en_stage0,en_stage1;
+ wire vld_reg0,vld_reg1;
+ wire shift;
+ assign en_stage0 = en;// & vld_in;
+ assign en_stage1 = en;// & vld_reg0;
+ wire   [DATA_WIDTH-1:0]  Oprand_A;
+ wire   [DATA_WIDTH-1:0]  Oprand_A_reg0;
+ wire   [DATA_WIDTH-1:0]  Result;
+ dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg0 (Oprand_A_D, clk, en, rst_n, Oprand_A_reg0);
+ dff_en #(.WIDTH(1)) dff_vld0 (vld_in,clk,en,rst_n,vld_reg0);
+
+ dff_en #(.WIDTH(17)) dff_temp7_out (temp7,clk,en,rst_n,temp7_Q);
+ dff_en #(.WIDTH(DATA_WIDTH))  dff_Oprand_A_reg1 (Oprand_A_reg0, clk, en, rst_n, Oprand_A);
+ dff_en #(.WIDTH(1)) dff_vld_1 (vld_reg0,clk,en,rst_n,vld_reg1);
+
+ dff_en #(.WIDTH(DATA_WIDTH))  dff_Result (Result, clk, en, rst_n, Result_out);
+ dff_en #(.WIDTH(1)) dff_vld_out (vld_reg1,clk,en,rst_n,vld_out);
+
+
+
+ ///////////////////////////////////////////////////////
+ assign sign_A = Oprand_A[DATA_WIDTH-1];
+ assign Expo_A = Oprand_A[DATA_WIDTH-2:MANT_WIDTH];
+ assign Mant_A = Oprand_A[MANT_WIDTH-1:0];
+ assign Ext_Mant_A = {1'b1,Mant_A[MANT_WIDTH-1:0]};
  assign temp0   = {1'b0,Ext_Mant_A[MANT_WIDTH]} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-1];
  assign temp1   = {1'b0,temp0} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-3];
  assign temp2   = temp1 + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-4];
@@ -60,7 +71,7 @@ module mul_log2e #(
  assign temp5   = {1'b0,temp4} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-11];
  assign temp6   = {1'b0,temp5} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-13];
  assign temp7   = {1'b0,temp6} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-15];
- assign temp8   = {3'd0,temp7} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-19];
+ assign temp8   = {3'd0,temp7_Q} + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-19];
  assign temp9   = temp8 + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-20];
  assign temp10  = temp9 + Ext_Mant_A[MANT_WIDTH:MANT_WIDTH-21];
  assign temp11  = {1'b0,temp10} + Ext_Mant_A[MANT_WIDTH:0];

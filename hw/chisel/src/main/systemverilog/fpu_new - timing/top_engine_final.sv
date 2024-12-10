@@ -1,22 +1,22 @@
 module FPU #(
-    parameter UserCsrNum      = 1,
-    parameter DataWidth       = 128,
-    parameter FP_WIDTH        = 32,
-    parameter PE_NUM          = DataWidth/FP_WIDTH,
-    parameter NUM_SOFTMAX_MAX = 128,
-    parameter OUT_BUFFER_DEPTH= NUM_SOFTMAX_MAX/PE_NUM
+    parameter int UserCsrNum      = 1,
+    parameter int DataWidth       = 128,
+    parameter int FP_WIDTH        = 32,
+    parameter int PE_NUM          = DataWidth/FP_WIDTH,
+    parameter int NUM_SOFTMAX_MAX = 128,
+    parameter int OUT_BUFFER_DEPTH= NUM_SOFTMAX_MAX/PE_NUM
 ) (
-    input   clk_i,
-    input   rst_ni,
-    output reg ext_data_i_ready,
-    input   ext_data_i_valid,
-    input   [DataWidth-1:0] ext_data_i_bits,
-    input   ext_data_o_ready,
-    output  ext_data_o_valid,
-    output  [DataWidth-1:0] ext_data_o_bits,
-    input   [31:0]ext_csr_i_0,
-    input   ext_start_i,
-    output reg ext_busy_o
+    input  logic clk_i,
+    input  logic rst_ni,
+    output logic ext_data_i_ready,
+    input  logic ext_data_i_valid,
+    input  logic [DataWidth-1:0] ext_data_i_bits,
+    input  logic ext_data_o_ready,
+    output logic ext_data_o_valid,
+    output logic [DataWidth-1:0] ext_data_o_bits,
+    input  logic [31:0]ext_csr_i_0,
+    input  logic ext_start_i,
+    output logic ext_busy_o
 );
 
 reg  [5:0]              state                  ;

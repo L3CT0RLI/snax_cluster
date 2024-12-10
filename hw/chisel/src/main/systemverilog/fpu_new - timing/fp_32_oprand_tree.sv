@@ -15,6 +15,8 @@ module fp_32_oprand_tree #(
 );
         genvar i;
         genvar j;
+        wire [OP_NUM * WIDTH-1:0]           oprands_in_reg0;
+        wire [OP_NUM * WIDTH-1:0]           oprands_in_reg1;
         wire [WIDTH-1:0]                                oprands                [OP_NUM-1:0];
         wire [WIDTH-1:0]                                oprands_reg            [OP_NUM-1:0];
         wire [MANT_WIDTH-1:0]                           mants                  [OP_NUM-1:0];
@@ -39,6 +41,11 @@ module fp_32_oprand_tree #(
         wire [EXPO_WIDTH-1:0]                           expos_mid_2              [OP_NUM/2-1:0];
         wire [EXPO_WIDTH-1:0]                           expos_mid_3              [OP_NUM/2-1:0];
         wire [EXPO_WIDTH-1:0]                           expos_mid_4              [OP_NUM/2-1:0];
+        wire [EXPO_WIDTH-1:0]                           expos_mid_0_Q              [OP_NUM/2-1:0];
+        wire [EXPO_WIDTH-1:0]                           expos_mid_1_Q              [OP_NUM/2-1:0];
+        wire [EXPO_WIDTH-1:0]                           expos_mid_2_Q              [OP_NUM/2-1:0];
+        wire [EXPO_WIDTH-1:0]                           expos_mid_3_Q              [OP_NUM/2-1:0];
+        wire [EXPO_WIDTH-1:0]                           expos_mid_4_Q              [OP_NUM/2-1:0];
         wire [EXPO_WIDTH-1:0]                           expo_max;
         wire [WIDTH-1:0]                                result_D1,result_D2;
 /////////////pipeline regs/////////////////////////////////////////
@@ -55,7 +62,7 @@ module fp_32_oprand_tree #(
                 dff_en #(.WIDTH(WIDTH))  dff_result_reg0 (result_D1, clk, en, rst_n, result_D2);
                 dff_en #(.WIDTH(WIDTH))  dff_result (result_D2, clk, en, rst_n, result);
 
-                wire     valid_reg0,valid_reg1,valid_reg2,valid_reg3,valid_reg4,valid_reg5,valid_reg6,valid_reg7;
+                wire     valid_reg0,valid_reg1,valid_reg2,valid_reg3,valid_reg4,valid_reg5,valid_reg6,valid_reg7,valid_reg8,valid_reg9;
                 dff_en #(.WIDTH(1)) dff_valid_reg0 (valid,clk,en,rst_n,valid_reg0);
                 dff_en #(.WIDTH(1)) dff_valid_reg1 (valid_reg0,clk,en,rst_n,valid_reg1);
                 dff_en #(.WIDTH(1)) dff_valid_reg2 (valid_reg1,clk,en,rst_n,valid_reg2);
@@ -64,7 +71,9 @@ module fp_32_oprand_tree #(
                 dff_en #(.WIDTH(1)) dff_valid_reg5 (valid_reg4,clk,en,rst_n,valid_reg5);
                 dff_en #(.WIDTH(1)) dff_valid_reg6 (valid_reg5,clk,en,rst_n,valid_reg6);
                 dff_en #(.WIDTH(1)) dff_valid_reg7 (valid_reg6,clk,en,rst_n,valid_reg7);
-                dff_en #(.WIDTH(1)) dff_done       (valid_reg7,clk,en,rst_n,done);
+                dff_en #(.WIDTH(1)) dff_valid_reg8 (valid_reg7,clk,en,rst_n,valid_reg8);
+                dff_en #(.WIDTH(1)) dff_valid_reg9 (valid_reg8,clk,en,rst_n,valid_reg9);
+                dff_en #(.WIDTH(1)) dff_done       (valid_reg9,clk,en,rst_n,done);
 /////////////////////////////////////////////////////////////////////////////////////////////////
         wire   [MANT_WIDTH+3:0]  mant_adder_in_reg          [OP_NUM-1:0];
         wire   [MANT_WIDTH+3:0]  mant_adder_in              [OP_NUM-1:0];
@@ -77,12 +86,14 @@ module fp_32_oprand_tree #(
 
 ///////////////////////////////////////////////////////////////////
         for (i=0;i<OP_NUM;i=i+1)begin
-                assign {signs[i],expos[i][EXPO_WIDTH-1:0],mants[i][MANT_WIDTH-1:0]} = oprands[i];
+                assign {signs[i],expos[i][EXPO_WIDTH-1:0],mants[i][MANT_WIDTH-1:0]} = oprands_in[i*WIDTH +: WIDTH];
                 assign {signs_reg[i],expos_reg[i][EXPO_WIDTH-1:0],mants_reg[i][MANT_WIDTH-1:0]} = oprands_reg[i];
         end
 
+        dff_en #(.WIDTH(OP_NUM * WIDTH))  dff_oprands_in_reg0 (oprands_in, clk, en, rst_n,oprands_in_reg0) ;
+        dff_en #(.WIDTH(OP_NUM * WIDTH))  dff_oprands_in_reg1 (oprands_in_reg0, clk, en, rst_n,oprands_in_reg1) ;
         for(i=0; i<OP_NUM; i=i+1) begin
-                assign  oprands[i] = oprands_in[i*WIDTH +: WIDTH];
+                assign  oprands[i] = oprands_in_reg1[i*WIDTH +: WIDTH];
         end
 //////////compare tree/////////////////////////////////////
         assign expo_max = expos_mid_4[0];
@@ -115,35 +126,38 @@ module fp_32_oprand_tree #(
                             .expo_a                  ( expos[2*j]     ),
                             .expo_b                  ( expos[2*j+1]   ),
 
-                            .expo_bigger             ( expos_mid_0[j] )
+                            .expo_bigger             ( expos_mid_0_Q[j] )
                         );
+                 //dff_en #(.WIDTH(EXPO_WIDTH))  dff_mid0 (expos_mid_0[j], clk, en, rst_n, expos_mid_0_Q[j]);
         end
 
         for(j=0;j<(OP_NUM/4);j=j+1)begin
                  expo_compare #(.EXPO_WIDTH ( EXPO_WIDTH ))
                          u_expo_compare (
-                            .expo_a                  ( expos_mid_0[2*j]     ),
-                            .expo_b                  ( expos_mid_0[2*j+1]   ),
+                            .expo_a                  ( expos_mid_0_Q[2*j]     ),
+                            .expo_b                  ( expos_mid_0_Q[2*j+1]   ),
 
                             .expo_bigger             ( expos_mid_1[j] )
                         );
+                dff_en #(.WIDTH(EXPO_WIDTH))  dff_mid1 (expos_mid_1[j], clk, en, rst_n, expos_mid_1_Q[j]);
         end
 
         for(j=0;j<(OP_NUM/8);j=j+1)begin
                  expo_compare #(.EXPO_WIDTH ( EXPO_WIDTH ))
                          u_expo_compare (
-                            .expo_a                  ( expos_mid_1[2*j]     ),
-                            .expo_b                  ( expos_mid_1[2*j+1]   ),
+                            .expo_a                  ( expos_mid_1_Q[2*j]     ),
+                            .expo_b                  ( expos_mid_1_Q[2*j+1]   ),
 
                             .expo_bigger             ( expos_mid_2[j] )
                         );
+                 dff_en #(.WIDTH(EXPO_WIDTH))  dff_mid2 (expos_mid_2[j], clk, en, rst_n, expos_mid_2_Q[j]);
         end
 
         for(j=0;j<(OP_NUM/16);j=j+1)begin
                  expo_compare #(.EXPO_WIDTH ( EXPO_WIDTH ))
                          u_expo_compare (
-                            .expo_a                  ( expos_mid_2[2*j]     ),
-                            .expo_b                  ( expos_mid_2[2*j+1]   ),
+                            .expo_a                  ( expos_mid_2_Q[2*j]     ),
+                            .expo_b                  ( expos_mid_2_Q[2*j+1]   ),
 
                             .expo_bigger             ( expos_mid_3[j] )
                         );
