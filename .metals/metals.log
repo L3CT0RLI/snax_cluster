@@ -663,3 +663,11 @@ INFO: Unsupported notification method: $/setTrace
 2024.12.16 11:00:38 INFO  time: compiled snax_cluster_215e1f29d2 in 1.27s[0m
 Dec 16, 2024 11:51:15 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFO: Unsupported notification method: $/setTrace
+2024.12.16 14:06:30 INFO  compiling snax_cluster_215e1f29d2 (50 scala sources)[0m
+2024.12.16 14:06:33 INFO  time: compiled snax_cluster_215e1f29d2 in 2.24s[0m
+2024.12.16 14:06:33 INFO  time: Imported build in 2.38s[0m
+2024.12.16 14:06:33 INFO  running doctor check[0m
+2024.12.16 14:06:33 INFO  java targets: snax_cluster_215e1f29d2, snax_cluster_215e1f29d2-test[0m
+2024.12.16 14:06:33 INFO  compiling snax_cluster_215e1f29d2 (50 scala sources)[0m
+2024.12.16 14:06:35 INFO  time: compiled snax_cluster_215e1f29d2 in 2.09s[0m
+2024.12.16 14:06:36 INFO  time: indexed workspace in 3.14s[0m

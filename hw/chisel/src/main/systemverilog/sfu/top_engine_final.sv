@@ -2,7 +2,7 @@ module SFU #(
     parameter int UserCsrNum      = 1,
     parameter int DataWidth       = 512,
     parameter int FP_WIDTH        = 32,
-    parameter int PE_NUM          = 512/FP_WIDTH,
+    parameter int PE_NUM          = DataWidth/FP_WIDTH,
     parameter int NUM_SOFTMAX_MAX = 512,
     parameter int OUT_BUFFER_DEPTH= NUM_SOFTMAX_MAX/PE_NUM
 ) (
@@ -18,11 +18,11 @@ module SFU #(
     input  logic ext_start_i,
     output logic ext_busy_o
 );
+
 reg  [5:0]              state                  ;
 reg  [5:0]              state_nxt              ;
 wire en;
-assign     ext_data_i_ready = en|(((func[4] ==1'b1))&i_data_softmax_ready);
-assign     en = !ext_data_o_valid | (ext_data_o_ready & ext_data_o_valid);
+assign     en   = 1;
 localparam IDLE =  6'b000001;
 localparam MAX_SEEK           = 6'b000010           ;
 localparam COMPUTE_EXP_SUM    = 6'b000100           ;
@@ -32,7 +32,6 @@ localparam COMPUTE_RESULT     = 6'b100000           ;
   //////////
 
 genvar i;
-reg i_data_softmax_ready;
 wire valid_compare;
 wire valid_compare_out;
 wire vld_PE;
@@ -62,10 +61,10 @@ assign func           = ext_csr_i_0[31:26];
 assign softmax_op_num = ext_csr_i_0 [25:25-$clog2(NUM_SOFTMAX_MAX/PE_NUM)];
 assign pe_data_in = ext_data_i_bits;
 //assign ext_data_o_bits  = pe_data_out;
-//assign ext_data_o_valid = vld_PE_out[0];
+//assign ext_data_o_valid = (state==IDLE)?0:vld_PE_out[0];
 assign vld_PE           = ((state_nxt==MAX_SEEK)|(func[4] !=1'b1))&(ext_data_i_ready&ext_data_i_valid);
 assign sum_tree_input = (state == SUM_PHASE2|state == COMPUTE_RESULT)? sum_result_shifter :{exp_x_minus_xmax,512'd0};
-assign valid_compare = (state_nxt==MAX_SEEK)&(i_data_softmax_ready&ext_data_i_valid);
+assign valid_compare = (state_nxt==MAX_SEEK)&(ext_data_i_ready&ext_data_i_valid);
 assign pe_x_max_vld = (state==COMPUTE_EXP_SUM)&(cnt_1!=0);
 //////////////////////////////////////////////////////////////////
 always @(posedge clk_i or negedge rst_ni)begin
@@ -127,72 +126,69 @@ always @(*)begin
         endcase
 end
 
+assign ext_busy_o = (state!=IDLE);
 always @(posedge clk_i or negedge rst_ni)begin
         if(!rst_ni)begin
-                        cnt <= 'd0;  
-                        i_data_softmax_ready <='d0;
-                        sum_exp_vld<='d0;
-                        cnt_1 <='d0;
-                        ext_busy_o<='d0;
+
         end
         else begin
                         cnt <= 'd0;  
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
         case(state)
         IDLE: begin
                         cnt<= softmax_op_num-1;
-                        i_data_softmax_ready <= 1;
+                        ext_data_i_ready <= 1;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
                 end
 
         MAX_SEEK: begin
                         cnt <= (state_nxt==COMPUTE_EXP_SUM)? softmax_op_num-1 :valid_compare_out ? cnt-1: cnt;
-                        i_data_softmax_ready <= (state_nxt != COMPUTE_EXP_SUM);
+                        ext_data_i_ready <= (state_nxt != COMPUTE_EXP_SUM);
                         sum_exp_vld<='d0;
                         cnt_1 <= softmax_op_num;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                         
                 end
 
         COMPUTE_EXP_SUM: begin
                         cnt <= vld_out_sum_tree ? cnt-1: cnt;
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <= (cnt_1 ==0)?cnt_1:cnt_1-1;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
 
         /*SUM: begin
                         cnt   <= vld_out_sum_tree ? cnt-1: cnt;
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <= (cnt_1==0) ?0 : cnt_1-1;
                 end*/
         SUM_PHASE2: begin
                         cnt <= (state_nxt == COMPUTE_RESULT) ? softmax_op_num: 'd0;
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
         COMPUTE_RESULT: begin
                         cnt <= vld_PE_out[0] ? cnt-1: cnt;
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d1;
                         cnt_1 <='d0;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
                 default: begin
                         cnt <= 'd0;  
-                        i_data_softmax_ready <='d0;
+                        ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
                 end
         endcase
         end
@@ -294,8 +290,8 @@ fifo_out #(
     .data_in                       ( pe_data_out                                    ),
     .full                          ( out_buffer_full                                ),
     .data_out                      ( ),//ext_data_o_bits                              ),
-    .data_valid                    ( )//ext_data_o_valid                               )
+    .data_valid                    ( )//ext_data_o_valid                               
 );
-assign ext_data_o_bits = {384'd0,pe_data_out};
-assign ext_data_o_valid= vld_PE_out[1];
+assign ext_data_o_bits = pe_data_out;
+assign ext_data_o_valid= (state==IDLE)?0:vld_PE_out[0];
 endmodule
