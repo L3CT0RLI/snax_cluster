@@ -170,7 +170,7 @@ always @(posedge clk_i or negedge rst_ni)begin
                         cnt_1 <= (cnt_1==0) ?0 : cnt_1-1;
                 end*/
         SUM_PHASE2: begin
-                        cnt <= (state_nxt == COMPUTE_RESULT) ? softmax_op_num: 'd0;
+                        cnt <= (state_nxt == COMPUTE_RESULT) ? softmax_op_num-1: 'd0;
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
