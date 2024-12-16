@@ -92,11 +92,11 @@ int main() {
         xdma_wait(task_id);
  
         // --------------------- Checking the Results --------------------- //
-        for (int i = 0; i < 32 * 16; i++) {
-            if ((int32_t)tcdm_out[i] != C_golden[i]) {
-                printf("The maxpool is incorrect!\n");
-                printf("tcdm_out[%d]=%d, C_golden[%d]=%d", i,
-                       (int32_t)tcdm_out[i], i, C_golden[i]);
+        for (int i = 0; i < 32 * 16 * 4; i++) {
+            if ((int8_t)tcdm_out[i] != C_golden[i]) {
+                printf("The softmax is incorrect!\n");
+                printf("tcdm_out[%d]=%d, C_golden[%d]=%d \n", i,
+                       (int8_t)tcdm_out[i], i, C_golden[i]);
             }
         }
         printf("Checking is done. All values are right\n");
