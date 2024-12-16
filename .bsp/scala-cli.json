@@ -1,0 +1,20 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "/home/liang/.local/share/coursier/bin/.scala-cli.aux",
+    "bsp",
+    "--json-options",
+    "/home/liang/verilator/snax_cluster/.scala-build/ide-options-v2.json",
+    "--json-launcher-options",
+    "/home/liang/verilator/snax_cluster/.scala-build/ide-launcher-options.json",
+    "--envs-file",
+    "/home/liang/verilator/snax_cluster/.scala-build/ide-envs.json",
+    "/home/liang/verilator/snax_cluster"
+  ],
+  "version": "1.5.4",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}

@@ -98,7 +98,8 @@ abstract class DataPathExtensionTester
                 throw new Exception("[Output Checker] Result is not correct. ")
 
               // Emulate the jamming at later stage
-              dut.clock.step(Random.between(1, 5))
+              //dut.clock.step(Random.between(1, 5))
+              //dut.clock.step(1)
               dut.io.data_o.ready.poke(true)
               dut.clock.step()
               dut.io.data_o.ready.poke(false)

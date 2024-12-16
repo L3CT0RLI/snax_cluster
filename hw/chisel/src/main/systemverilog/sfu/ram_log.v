@@ -10,6 +10,7 @@ module dual_port_ram_log #(
     input wire [DATA_WIDTH-1:0] data_b,  // Port B data input
     input wire we_a,                     // Port A write enable
     input wire we_b,                     // Port B write enable
+    input wire en,
     output reg [DATA_WIDTH-1:0] q_a,     // Port A data output
     output reg [DATA_WIDTH-1:0] q_b      // Port B data output
 );
@@ -27,7 +28,7 @@ module dual_port_ram_log #(
         if(!rst_n)begin
             q_a <= 0;
         end
-        else begin
+        else if(en)begin
             case(addr_a)
             5'd0:begin
 q_a <= 'h0362    ;end
@@ -96,13 +97,16 @@ q_a <= 'h0000    ;end
 default:q_a<=0;
         endcase
         end
+        else begin
+            q_a <=q_a;
+        end
     end
 
 always @(posedge clk or negedge rst_n) begin
         if(!rst_n)begin
             q_b <= 0;
         end
-        else begin
+        else if(en)begin
             case(addr_b)
            5'd0:begin
 q_b <= 'h0362    ;end
@@ -170,6 +174,9 @@ q_b <= 'h022F    ;end
 q_b <= 'h0000    ;end
 default:q_b<=0;
         endcase
+        end
+        else begin
+            q_b <=q_b;
         end
     end
 

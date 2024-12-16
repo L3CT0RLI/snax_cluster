@@ -178,6 +178,7 @@ assign Result_D               = {(overflow? (zero_flag_reg3): expo_A_minus_127_r
     .we_b                    ( we                     ),
     .rst_n                   (rst_n),
     .q_a                     ( q_a     [LUT_BITS-1:0]           ),
-    .q_b                     ( q_b     [LUT_BITS-1:0]           )
+    .q_b                     ( q_b     [LUT_BITS-1:0]           ),
+    .en(en)
 );
 endmodule

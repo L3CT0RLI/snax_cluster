@@ -15,7 +15,7 @@ object BigIntReader {
       source
         .getLines()
         .flatMap { line =>
-          Try(BigInt(line.trim)).toOption
+          Try(BigInt(line.trim,16)).toOption
         }
         .toSeq
     } finally {
@@ -31,12 +31,12 @@ class SFUSigmoidTester extends DataPathExtensionTester {
   // System Val
   val extension_width = 512
   val csr_vec = Seq(
-    (1 << 26) +     // Function Selection
-    (0 << (20 - 2)) // Softmax Total Amount of Number
+    (1 << 30) +     // Function Selection
+    (1 << 25) // Softmax Total Amount of Number
   )
 
-  val input_data_vec: Seq[BigInt] = BigIntReader.fromFile("src/main/systemverilog/sfu/testvectors/vector_softmax.txt")
-  val output_data_vec: Seq[BigInt] = BigIntReader.fromFile("src/main/systemverilog/sfu/testvectors/output_sigmoid.txt")
+  val input_data_vec: Seq[BigInt] = BigIntReader.fromFile("src/main/systemverilog/sfu/testvectors/vectors_softmax.txt")
+  val output_data_vec: Seq[BigInt] = BigIntReader.fromFile("src/main/systemverilog/sfu/testvectors/output_softmax.txt")
   println(input_data_vec)
   println("----------------------------")
   println(output_data_vec)

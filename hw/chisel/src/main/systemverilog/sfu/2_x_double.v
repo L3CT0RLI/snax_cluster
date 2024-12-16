@@ -224,6 +224,7 @@ dual_port_ram_pos #(
     .rst_n                   ( rst_n                    ),
 
     .q_a                     ( q_a2     [LUT_BITS-1:0] ),
-    .q_b                     ( q_b2     [LUT_BITS-1:0] )
+    .q_b                     ( q_b2     [LUT_BITS-1:0] ),
+    .en(en)
 );
 endmodule

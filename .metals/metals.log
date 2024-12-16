@@ -590,3 +590,76 @@ INFO: Unsupported notification method: $/setTrace
 2024.12.05 15:51:30 INFO  shutting down Metals[0m
 2024.12.05 15:51:30 INFO  Shut down connection with build server.[0m
 2024.12.05 15:51:30 INFO  Exiting server[0m
+2024.12.12 10:06:47 INFO  Started: Metals version 1.4.1 in folders '/home/liang/verilator/snax_cluster' for client Visual Studio Code 1.95.3.[0m
+2024.12.12 10:06:48 WARN  Flyway upgrade recommended: H2 2.3.232 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.224.[0m
+2024.12.12 10:06:48 WARN  no build tool detected in workspace '/home/liang/verilator/snax_cluster'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+2024.12.12 10:06:49 WARN  Build server is not auto-connectable.[0m
+2024.12.12 11:45:35 INFO  Shutting down server[0m
+2024.12.12 11:45:35 INFO  shutting down Metals[0m
+2024.12.12 11:45:35 INFO  Exiting server[0m
+2024.12.13 10:01:25 INFO  Started: Metals version 1.4.1 in folders '/home/liang/verilator/snax_cluster' for client Visual Studio Code 1.96.0.[0m
+2024.12.13 10:01:26 WARN  Flyway upgrade recommended: H2 2.3.232 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.224.[0m
+2024.12.13 10:01:26 WARN  no build tool detected in workspace '/home/liang/verilator/snax_cluster'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+2024.12.13 10:01:26 WARN  Build server is not auto-connectable.[0m
+2024.12.13 10:49:58 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:49:58 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:49:58 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:50:00 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:50:02 INFO  time: code lens generation in 1.86s[0m
+2024.12.13 10:50:38 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:50:38 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:50:38 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.13 10:51:10 INFO  Shutting down server[0m
+2024.12.13 10:51:10 INFO  shutting down Metals[0m
+2024.12.13 10:51:10 INFO  Exiting server[0m
+2024.12.16 11:00:17 INFO  Started: Metals version 1.4.1 in folders '/home/liang/verilator/snax_cluster' for client Visual Studio Code 1.96.0.[0m
+2024.12.16 11:00:17 WARN  Flyway upgrade recommended: H2 2.3.232 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.224.[0m
+2024.12.16 11:00:18 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.16 11:00:19 INFO  Running List(/home/liang/.local/share/coursier/bin/scala-cli, setup-ide, /home/liang/verilator/snax_cluster)[0m
+2024.12.16 11:00:19 INFO  Attempting to connect to the build server...[0m
+2024.12.16 11:00:19 INFO  Running BSP server List(/home/liang/.local/share/coursier/bin/.scala-cli.aux, bsp, --json-options, /home/liang/verilator/snax_cluster/.scala-build/ide-options-v2.json, --json-launcher-options, /home/liang/verilator/snax_cluster/.scala-build/ide-launcher-options.json, --envs-file, /home/liang/verilator/snax_cluster/.scala-build/ide-envs.json, /home/liang/verilator/snax_cluster)[0m
+2024.12.16 11:00:19 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/liang/verilator/snax_cluster/.metals/bsp.trace.json or /home/liang/.cache/metals/bsp.trace.json[0m
+2024.12.16 11:00:19 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.16 11:00:21 INFO  BSP server: Checking https://github.com/coursier/jvm-index/raw/master/index.json[0m
+2024.12.16 11:00:21 INFO  BSP server: Checked https://github.com/coursier/jvm-index/raw/master/index.json[0m
+2024.12.16 11:00:21 INFO  BSP server: Downloading https://github.com/coursier/jvm-index/raw/master/index.json[0m
+2024.12.16 11:00:21 INFO  BSP server: Downloaded https://github.com/coursier/jvm-index/raw/master/index.json[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.5.2/scala3-compiler_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.5.2/scala3-compiler_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.5.2/scala3-interfaces-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.5.2/tasty-core_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.5.2/scala3-interfaces-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.5.2/tasty-core_3-3.5.2.pom[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.5.2/tasty-core_3-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.5.2/scala3-interfaces-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.5.2/scala3-compiler_3-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.5.2/scala3-interfaces-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.5.2/tasty-core_3-3.5.2.jar[0m
+2024.12.16 11:00:22 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2.jar[0m
+2024.12.16 11:00:23 INFO  no build target found for /home/liang/verilator/snax_cluster/hw/chisel/src/test/scala/snax/DataPathExtension/SFUTester.scala. Using presentation compiler with project's scala-library version: 3.3.4[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.5.2/scala3-compiler_3-3.5.2.jar[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.5.2/scala3-sbt-bridge-3.5.2.pom[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.5.2/scala3-sbt-bridge-3.5.2.pom[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.5.2/scala3-sbt-bridge-3.5.2.jar[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.5.2/scala3-sbt-bridge-3.5.2.jar[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloading https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2-sources.jar[0m
+2024.12.16 11:00:24 INFO  BSP server: Downloaded https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.5.2/scala3-library_3-3.5.2-sources.jar[0m
+2024.12.16 11:00:24 INFO  time: Connected to build server in 5.12s[0m
+2024.12.16 11:00:24 INFO  Connected to Build server: scala-cli v1.5.4[0m
+2024.12.16 11:00:24 INFO  running doctor check[0m
+2024.12.16 11:00:24 INFO  java targets: snax_cluster_215e1f29d2, snax_cluster_215e1f29d2-test[0m
+2024.12.16 11:00:24 INFO  compiling snax_cluster_215e1f29d2 (48 scala sources)[0m
+2024.12.16 11:00:28 WARN  Flyway upgrade recommended: H2 2.3.232 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.224.[0m
+2024.12.16 11:00:29 INFO  time: indexed workspace in 4.66s[0m
+2024.12.16 11:00:33 INFO  time: compiled snax_cluster_215e1f29d2 in 8.76s[0m
+2024.12.16 11:00:33 INFO  compiling snax_cluster_215e1f29d2 (48 scala sources)[0m
+2024.12.16 11:00:35 INFO  time: compiled snax_cluster_215e1f29d2 in 2s[0m
+2024.12.16 11:00:35 INFO  compiling snax_cluster_215e1f29d2 (48 scala sources)[0m
+2024.12.16 11:00:37 INFO  time: compiled snax_cluster_215e1f29d2 in 1.37s[0m
+2024.12.16 11:00:37 INFO  compiling snax_cluster_215e1f29d2 (48 scala sources)[0m
+2024.12.16 11:00:38 INFO  time: compiled snax_cluster_215e1f29d2 in 1.27s[0m
+Dec 16, 2024 11:51:15 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

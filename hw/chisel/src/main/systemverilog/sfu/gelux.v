@@ -226,7 +226,8 @@ dual_port_ram_gelu #(
         .we_b                    ( we                     ),
     
         .q_a                     ( q_a     [LUT_BITS-1:0]           ),
-        .q_b                     ( q_b     [LUT_BITS-1:0]           )
+        .q_b                     ( q_b     [LUT_BITS-1:0]           ),
+        .en(en)
     );
 
     lza_log2 #(

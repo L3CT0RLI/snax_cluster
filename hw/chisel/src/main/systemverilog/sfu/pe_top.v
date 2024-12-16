@@ -70,8 +70,8 @@ wire                  adder_0_vld_out_channel_0,adder_0_vld_out_channel_1;
  u_buffer_0 (
     .clk                           ( clk                                            ),
     .rst_n                         ( rst_n                                          ),
-    .rd_en                         ( x_max_vld                                      ),
-    .wr_en                         ( input_vld_channel_0                            ),
+    .rd_en                         ( x_max_vld&en                                   ),
+    .wr_en                         ( input_vld_channel_0&en                         ),
     .data_in                       ( input_channel_0               [DATA_WIDTH-1:0] ),
 
     .data_out                      ( buffer_0_out                  [DATA_WIDTH-1:0] )
@@ -300,8 +300,8 @@ fifo_FPU #(
 u_buffer_1 (
    .clk                           ( clk                                            ),
    .rst_n                         ( rst_n                                          ),
-   .rd_en                         ( mux_07_vld_out                                      ),///////?///////////
-   .wr_en                         ( mul_log2e_0_vld_out                            ),
+   .rd_en                         ( mux_07_vld_out&en                              ),///////?///////////
+   .wr_en                         ( mul_log2e_0_vld_out&en                            ),
    .data_in                       ( mul_log2e_0_data_out    [DATA_WIDTH-1:0] ),
 
    .data_out                      ( buffer_1_out                  [DATA_WIDTH-1:0] )
@@ -315,8 +315,8 @@ fifo_FPU #(
 u_buffer_2 (
    .clk                           ( clk                                            ),
    .rst_n                         ( rst_n                                          ),
-   .rd_en                         ( mux_07_vld_out                                      ),///////?///////////
-   .wr_en                         ( log2_x_0_vld_out                            ),
+   .rd_en                         ( mux_07_vld_out&en                                      ),///////?///////////
+   .wr_en                         ( log2_x_0_vld_out&en                            ),
    .data_in                       ( log2_x_0_data_out  [DATA_WIDTH-1:0]  ),
 
    .data_out                      ( buffer_2_out                  [DATA_WIDTH-1:0] )
@@ -403,8 +403,8 @@ fifo_FPU #(
 u_buffer_sign (
    .clk                           ( clk                                            ),
    .rst_n                         ( rst_n                                          ),
-   .rd_en                         ( _2_X_vld_out                                    ),///////?///////////
-   .wr_en                         ( wr_en_sign_X                             ),
+   .rd_en                         ( _2_X_vld_out&en                                    ),///////?///////////
+   .wr_en                         ( wr_en_sign_X&en                             ),
    .data_in                       ( sign_X                                   ),
 
    .data_out                      ( buffer_sign_out                   )
