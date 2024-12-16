@@ -39,6 +39,13 @@ SUBDIRS += snax-gemmx-conv
 SUBDIRS += snax-xdma-memset
 SUBDIRS += snax-xdma-maxpool
 endif
+ifeq ($(CFG_OVERRIDE), cfg/snax_SFU_cluster.hjson)
+SUBDIRS += snax-gemmx-matmul
+SUBDIRS += snax-gemmx-conv
+SUBDIRS += snax-xdma-memset
+SUBDIRS += snax-xdma-maxpool
+SUBDIRS += snax-SFU-test
+endif
 SUBDIRS += snax-multi-cluster-playground
 ifeq ($(CFG_OVERRIDE), cfg/snax_hypercorex_cluster.hjson)
 SUBDIRS += snax-hypercorex/test-csr

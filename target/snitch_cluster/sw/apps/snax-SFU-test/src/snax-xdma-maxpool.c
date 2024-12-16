@@ -50,7 +50,7 @@ int main() {
         tbound_dst[2] = 1;
  
         // First we need to transfer the input data from L3->TCDM
-        snrt_dma_start_1d(tcdm_in, DataIn, 32 * sizeof(int32_t));
+        snrt_dma_start_1d(tcdm_in, DataIn, 32 * 16 * sizeof(int32_t));
         snrt_dma_wait_all();
  
         // --------------------- Configure the Ext --------------------- //
@@ -92,15 +92,15 @@ int main() {
         xdma_wait(task_id);
  
         // --------------------- Checking the Results --------------------- //
-        for (int i = 0; i < output_data_len; i++) {
-            if ((int8_t)tcdm_out[i] != C_golden[i]) {
+        for (int i = 0; i < 32 * 16; i++) {
+            if ((int32_t)tcdm_out[i] != C_golden[i]) {
                 printf("The maxpool is incorrect!\n");
                 printf("tcdm_out[%d]=%d, C_golden[%d]=%d", i,
-                       (int8_t)tcdm_out[i], i, C_golden[i]);
+                       (int32_t)tcdm_out[i], i, C_golden[i]);
             }
         }
         printf("Checking is done. All values are right\n");
     }
- 
+
     return 0;
 }
