@@ -61,7 +61,7 @@ assign func           = ext_csr_i_0[31:26];
 assign softmax_op_num = ext_csr_i_0 [25:25-$clog2(NUM_SOFTMAX_MAX/PE_NUM)];
 assign pe_data_in = ext_data_i_bits;
 //assign ext_data_o_bits  = pe_data_out;
-//assign ext_data_o_valid = vld_PE_out[0];
+//assign ext_data_o_valid = (state==IDLE)?0:vld_PE_out[0];
 assign vld_PE           = ((state_nxt==MAX_SEEK)|(func[4] !=1'b1))&(ext_data_i_ready&ext_data_i_valid);
 assign sum_tree_input = (state == SUM_PHASE2|state == COMPUTE_RESULT)? sum_result_shifter :{exp_x_minus_xmax,512'd0};
 assign valid_compare = (state_nxt==MAX_SEEK)&(ext_data_i_ready&ext_data_i_valid);
@@ -126,6 +126,7 @@ always @(*)begin
         endcase
 end
 
+assign ext_busy_o = (state!=IDLE);
 always @(posedge clk_i or negedge rst_ni)begin
         if(!rst_ni)begin
 
@@ -135,14 +136,14 @@ always @(posedge clk_i or negedge rst_ni)begin
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
         case(state)
         IDLE: begin
                         cnt<= softmax_op_num-1;
                         ext_data_i_ready <= 1;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
                 end
 
         MAX_SEEK: begin
@@ -150,7 +151,7 @@ always @(posedge clk_i or negedge rst_ni)begin
                         ext_data_i_ready <= (state_nxt != COMPUTE_EXP_SUM);
                         sum_exp_vld<='d0;
                         cnt_1 <= softmax_op_num;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                         
                 end
 
@@ -159,7 +160,7 @@ always @(posedge clk_i or negedge rst_ni)begin
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <= (cnt_1 ==0)?cnt_1:cnt_1-1;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
 
         /*SUM: begin
@@ -173,21 +174,21 @@ always @(posedge clk_i or negedge rst_ni)begin
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
         COMPUTE_RESULT: begin
                         cnt <= vld_PE_out[0] ? cnt-1: cnt;
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d1;
                         cnt_1 <='d0;
-                        ext_busy_o<='d1;
+                        //ext_busy_o<='d1;
                 end
                 default: begin
                         cnt <= 'd0;  
                         ext_data_i_ready <='d0;
                         sum_exp_vld<='d0;
                         cnt_1 <='d0;
-                        ext_busy_o<='d0;
+                        //ext_busy_o<='d0;
                 end
         endcase
         end
@@ -292,5 +293,5 @@ fifo_out #(
     .data_valid                    ( )//ext_data_o_valid                               
 );
 assign ext_data_o_bits = pe_data_out;
-assign ext_data_o_valid= vld_PE_out[1];
+assign ext_data_o_valid= (state==IDLE)?0:vld_PE_out[0];
 endmodule
