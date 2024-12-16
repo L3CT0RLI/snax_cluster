@@ -23,6 +23,9 @@ endif
 ifeq ($(CFG_OVERRIDE), cfg/snax_KUL_cluster.hjson)
 SUBDIRS += snax/gemmx snax/xdma
 endif
+ifeq ($(CFG_OVERRIDE), cfg/snax_SFU_cluster.hjson)
+SUBDIRS += snax/gemmx snax/xdma
+endif
 
 ifeq (${CFG_OVERRIDE}, cfg/snax_alu_cluster.hjson)
 SUBDIRS += snax/snax-alu
